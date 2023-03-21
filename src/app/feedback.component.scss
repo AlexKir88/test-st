@@ -77,8 +77,8 @@
         margin: 0 0.5vw 0 0.8vw;
         width: 1.4vw;
         height: 2.8vh;
-        border-right:  3px solid rgb(228, 158, 26, 0.7);
-        border-left: 3px solid rgb(228, 158, 26, 0.7);
+        border-right:  1px solid rgb(228, 158, 26, 0.7);
+        border-left: 1px solid rgb(228, 158, 26, 0.7);
     }
     .second {
         margin: 0 0 0 3vw;
@@ -86,10 +86,10 @@
     .hline {
         box-sizing: border-box;
         position: absolute;
-        margin: 1vh 0;
+        margin: 1.2vh 0;
         width: 5.5vw;
         height: 1vh;
-        border-top: 3px solid rgb(228, 158, 26, 0.7);
+        border-top: 1px solid rgb(228, 158, 26, 0.7);
     }
     .numb {
         position: relative;

@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { sendMessage } from './request';
 
 @Component({
   selector: 'feedback',
-  template: ` <div class="background">
+  template: ` <div class="background" [hidden]="unVisibleComponent">
     <div class="feedback-window">
       <form (submit)="checkValidFields($event)">
         <div>
@@ -16,7 +17,7 @@ import { Component } from '@angular/core';
         <div class="name-field">Ваше имя:</div>
         <div class="input-field">
           <img class="icon" src="/assets/images/contact.png" alt="contact" />
-          <input type="text" />
+          <input type="text" name="nameUser" required />
         </div>
         <br />
         <div class="name-field">Ваш Email:</div>
@@ -46,7 +47,7 @@ import { Component } from '@angular/core';
         <br />
         <div class="name-field">Тема:</div>
         <div class="input-field">
-          <select>
+          <select name="theme">
             <option>Техподдержка</option>
             <option>Продажи</option>
             <option>Другое</option>
@@ -56,12 +57,12 @@ import { Component } from '@angular/core';
         <br />
         <div class="name-field">Ваше сообщение:</div>
         <div class="input-field">
-          <textarea></textarea>
+          <textarea required name="message"></textarea>
         </div>
         <br />
         <div class="name-field">Цифры:</div>
         <div class="check-field">
-          <input type="number" name="check" />
+          <input type="number" name="check" required />
           <div [hidden]="unvisibleErrorCup" class="error">
             некорректный номер
           </div>
@@ -81,17 +82,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./feedback.component.scss'],
 })
 export class Feedback {
+  @Input() callbackFromApp: any;
+  unVisibleComponent = false;
   unvisibleErrorEmail: boolean = true;
   unvisibleErrorPhone: boolean = true;
   unvisibleErrorCup: boolean = true;
   capture: number = Math.floor(Math.random() * 100000);
 
+  makeUnvisible() {
+    this.unVisibleComponent = true;
+  }
+
   checkValidFields(e: SubmitEvent) {
     let elemForm = e.currentTarget as HTMLFormElement;
     let elems = elemForm.elements as HTMLFormControlsCollection;
+    let elemInputName = elems[<any>'nameUser'] as HTMLInputElement;
     let elemInputEmail = elems[<any>'email'] as HTMLInputElement;
     let elemInputPhone = elems[<any>'phone'] as HTMLInputElement;
     let elemInputCap = elems[<any>'check'] as HTMLInputElement;
+    let elemSelectTheme = elems[<any>'theme'] as HTMLSelectElement;
+    let elemTextMessage = elems[<any>'message'] as HTMLTextAreaElement;
 
     if (!isValidEmail(elemInputEmail.value)) {
       elemInputEmail.style.border = '3px solid red';
@@ -116,6 +126,22 @@ export class Feedback {
       e.preventDefault();
       return;
     }
+
+    e.preventDefault();
+
+    sendMessage(
+      {
+        name: elemInputName.value,
+        email: elemInputEmail.value,
+        tel: elemInputPhone.value,
+        theme: elemSelectTheme.value,
+        message: elemTextMessage.value,
+      },
+      this.callbackFromApp,
+      () => this.makeUnvisible()
+    );
+
+    // this.unVisibleComponent = true;
   }
 
   changeEmail(e: Event) {
