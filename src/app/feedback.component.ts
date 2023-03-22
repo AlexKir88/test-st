@@ -76,6 +76,9 @@ import { sendMessage } from './request';
         <div class="cont-button">
           <button type="submit">Отправить письмо!</button>
         </div>
+        <div [hidden]="unvisibleErrorSend" class="errorSend">
+          Ошибка сервера!
+        </div>
       </form>
     </div>
   </div>`,
@@ -87,6 +90,7 @@ export class Feedback {
   unvisibleErrorEmail: boolean = true;
   unvisibleErrorPhone: boolean = true;
   unvisibleErrorCup: boolean = true;
+  unvisibleErrorSend: boolean = true;
   capture: number = Math.floor(Math.random() * 100000);
 
   makeUnvisible() {
@@ -140,8 +144,7 @@ export class Feedback {
       this.callbackFromApp,
       () => this.makeUnvisible()
     );
-
-    // this.unVisibleComponent = true;
+    setTimeout(() => (this.unvisibleErrorSend = false), 3000);
   }
 
   changeEmail(e: Event) {

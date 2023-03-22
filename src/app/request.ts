@@ -3,7 +3,8 @@ export const sendMessage = async (
   callback: Function,
   makeUnvisible: Function
 ) => {
-  let response = await fetch('http://localhost:3000/', {
+  // let response = await fetch('http://localhost:3000/', {
+  let response = await fetch('https://server-node-jhzh.onrender.com/', {
     method: 'POST',
     headers: {
       'Content-Type': 'text/plain',
