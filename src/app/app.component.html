@@ -1,0 +1,9 @@
+<div class="main">
+    <h3>Отправлено сообщение</h3>
+    <div class="name-field">Ваше имя: {{messageData.name}}</div>
+    <div class="name-field">Ваш Email: {{messageData.email}}</div>
+    <div class="name-field">Ваш телефон: {{messageData.tel}}</div>
+    <div class="name-field">Тема: {{messageData.theme}}</div>
+    <div class="name-field">Ваше сообщение: {{messageData.message}}</div>
+    <feedback (callbackFromApp)=setData($event) />
+  </div>

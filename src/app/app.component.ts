@@ -10,15 +10,7 @@ type ObjMessage = {
 
 @Component({
   selector: 'app-root',
-  template: `<div class="main">
-    <h3>Отправлено сообщение</h3>
-    <div class="name-field">Ваше имя: {{messageData.name}}</div>
-    <div class="name-field">Ваш Email: {{messageData.email}}</div>
-    <div class="name-field">Ваш телефон: {{messageData.tel}}</div>
-    <div class="name-field">Тема: {{messageData.theme}}</div>
-    <div class="name-field">Ваше сообщение: {{messageData.message}}</div>
-    <feedback [callbackFromApp]=setData />
-  </div>`,
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   messageData: ObjMessage = {
@@ -28,7 +20,7 @@ export class AppComponent {
     theme: '',
     message: '',
   };
-  setData: Function = async (objMessage: any) => {
+  async setData(objMessage: any): Promise<void> {
     this.messageData = objMessage;
-  };
+  }
 }

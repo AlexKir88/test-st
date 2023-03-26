@@ -1,0 +1,7 @@
+<div class="name-field">Ваш телефон:</div>
+<div class="input-field">
+    <img class="icon" src="http://s1.iconbird.com/ico/2014/1/612/w512h5121390849252cellphone512.png" alt="contact" />
+    <input autocomplete="off" name="phone" type="text" value="+7" (change)="changePhone($event)" (input)="mask($event)"
+        (blur)="checkValid($event)" />
+    <div [hidden]="unvisibleErrorPhone" class="error">некорректный номер</div>
+</div>

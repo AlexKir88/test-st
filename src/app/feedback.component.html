@@ -1,0 +1,31 @@
+<div class="background" [hidden]="unVisibleComponent">
+    <div class="feedback-window"  >
+        <form (submit)="checkValidFields($event)"  >
+            <div>
+                <div class="parent-red-line">
+                    <div class="red-line">
+                        <h1>Напишите нам</h1>
+                    </div>
+                    <div class="triangle"></div>
+                </div>
+            </div>
+            <name />
+            <br />
+            <email />
+            <br />
+            <tel />
+            <br />
+            <theme />
+            <br />
+            <message />
+            <br />
+            <numbers />
+            <div class="cont-button">
+                <button type="submit">Отправить письмо!</button>
+            </div>
+            <div [hidden]="unvisibleErrorSend" class="errorSend">
+                Ошибка сервера!
+            </div>
+        </form>
+    </div>
+</div>
