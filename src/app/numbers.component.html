@@ -1,7 +1,15 @@
 <div class="name-field">Цифры:</div>
 <div class="check-field">
-    <input type="number" name="check" required (blur)="checkValid($event)" />
-    <div [hidden]="unvisibleErrorCup" class="error">некорректный номер</div>
+    <input autocomplete="off" 
+        type="number" 
+        name="check" 
+        required [(ngModel)]="numbers" 
+        #validNumbers="ngModel" 
+        [min]="capture" 
+        [max]="capture"
+    />
+    <div *ngIf="validNumbers.invalid && !validNumbers.errors?.['required'] && validNumbers.touched " class="error">некорректный номер</div>
+    <div *ngIf="validNumbers.errors?.['required'] &&  validNumbers.touched " class="error">незаполнен номер</div>
     <div class="check-numb">
         <div class="vline"></div>
         <div class="vline second"></div>

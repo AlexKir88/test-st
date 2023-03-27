@@ -6,26 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./feedback.component.scss'],
 })
 export class Tel {
-  unvisibleErrorPhone: boolean = true;
-
-  checkValid(e: Event): void {
-    let elemInputPhone = <HTMLInputElement>e.target;
-    let phoneValue: string = elemInputPhone.value;
-    let lengthPhone: number = phoneValue.length;
-    if (lengthPhone != 17) {
-      elemInputPhone.style.border = '3px solid red';
-      this.unvisibleErrorPhone = false;
-      //   elemInputPhone.focus();
-      e.preventDefault();
-      return;
-    }
-  }
-
-  changePhone(e: Event): void {
-    this.unvisibleErrorPhone = true;
-    let inputEmail = e.target as HTMLInputElement;
-    inputEmail.style.border = '0.5px solid black';
-  }
+  tel: string = '';
 
   mask(e: Event): void {
     let el = e.target as HTMLInputElement;

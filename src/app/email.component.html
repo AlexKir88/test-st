@@ -3,6 +3,14 @@
     <img class="icon"
         src="https://spng.pngfind.com/pngs/s/421-4216333_email-home-telephone-blue-icon-hd-png-download.png"
         alt="contact" />
-    <input autocomplete="off" type="text" name="email" (change)="changeEmail($event)" (blur)="checkValid($event)" />
-    <div [hidden]="unvisibleErrorEmail" class="error">некорректный email</div>
+    <input autocomplete="off" 
+        type="email" 
+        name="email" 
+        [(ngModel)]="email" 
+        #validEmail="ngModel" 
+        [pattern]="emailPattern"
+        required
+        />
+    <div *ngIf="validEmail.invalid && !validEmail.errors?.['required'] && validEmail.touched" class="error">некорректный email</div>
+    <div *ngIf="validEmail.errors?.['required'] && validEmail.touched" class="error">незаполнен email </div>
 </div>

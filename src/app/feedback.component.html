@@ -1,6 +1,6 @@
 <div class="background" [hidden]="unVisibleComponent">
     <div class="feedback-window"  >
-        <form (submit)="checkValidFields($event)"  >
+        <form (submit)="checkValidFields($event)" [formGroup]="clientForm" novalidate>
             <div>
                 <div class="parent-red-line">
                     <div class="red-line">

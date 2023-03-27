@@ -5,4 +5,6 @@ import { Component, Input } from '@angular/core';
   templateUrl: './name.component.html',
   styleUrls: ['./feedback.component.scss'],
 })
-export class Name {}
+export class Name {
+  userName: string = '';
+}

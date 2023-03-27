@@ -1,4 +1,5 @@
 <div class="name-field">Ваше сообщение:</div>
 <div class="input-field">
-    <textarea required name="message"></textarea>
+    <textarea required name="message" [(ngModel)]="message" #validMessage="ngModel" ></textarea>
+    <div *ngIf="validMessage.invalid &&  validMessage.touched" class="error">незаполнено сообщение</div>
 </div>

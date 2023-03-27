@@ -3,5 +3,6 @@
     <img class="icon"
         src="https://img1.freepng.ru/20180215/jtq/kisspng-user-profile-icon-contact-information-cliparts-5a85cff7d762d4.2802243715187189678822.jpg"
         alt="contact" />
-    <input autocomplete="off" type="text" name="nameUser" required  />
+    <input autocomplete="off" type="text" name="nameUser" required [(ngModel)]="userName" #validName="ngModel" />
+    <div *ngIf="validName.invalid && validName.touched" class="error">незаполнено имя</div>
 </div>

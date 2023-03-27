@@ -8,6 +8,8 @@ import { sendMessage } from './request';
   styleUrls: ['./feedback.component.scss'],
 })
 export class Feedback {
+  clientForm: FormGroup | undefined;
+
   @Output() callbackFromApp = new EventEmitter<object>();
   defineObject(objMessage: any): void {
     this.callbackFromApp.emit(objMessage);
@@ -21,7 +23,7 @@ export class Feedback {
   }
 
   checkValidFields(e: SubmitEvent) {
-    e.preventDefault();
+    // e.preventDefault();
 
     let formFeedback = <HTMLFormElement>e.target;
     sendMessage(

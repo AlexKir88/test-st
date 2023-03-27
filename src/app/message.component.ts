@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './message.component.html',
   styleUrls: ['./feedback.component.scss'],
 })
-export class Message {}
+export class Message {
+  message: string = '';
+}
