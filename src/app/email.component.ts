@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { ControlContainer, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'email',
   templateUrl: './email.component.html',
   styleUrls: ['./feedback.component.scss'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class Email {
   email: string = '';

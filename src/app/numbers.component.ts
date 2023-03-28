@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'numbers',
   templateUrl: './numbers.component.html',
   styleUrls: ['./feedback.component.scss'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class Numbers {
   numbers: number | undefined;

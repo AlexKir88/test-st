@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'tel',
   templateUrl: './tel.component.html',
   styleUrls: ['./feedback.component.scss'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class Tel {
   tel: string = '';

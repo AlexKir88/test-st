@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
 import { sendMessage } from './request';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'feedback',
@@ -8,41 +9,45 @@ import { sendMessage } from './request';
   styleUrls: ['./feedback.component.scss'],
 })
 export class Feedback {
-  clientForm: FormGroup | undefined;
+  disabledButton: boolean = false;
+  formValid: boolean = true;
+  formSubmitted: boolean = false;
+  errorSend: boolean = false;
 
   @Output() callbackFromApp = new EventEmitter<object>();
   defineObject(objMessage: any): void {
     this.callbackFromApp.emit(objMessage);
   }
 
-  unVisibleComponent: boolean = false;
-  unvisibleErrorSend: boolean = true;
-
   makeUnvisible(): void {
-    this.unVisibleComponent = true;
+    this.formSubmitted = true;
   }
 
-  checkValidFields(e: SubmitEvent) {
-    // e.preventDefault();
-
-    let formFeedback = <HTMLFormElement>e.target;
+  sabmitData(form: FormGroup) {
+    if (form.status == 'INVALID') {
+      this.formValid = false;
+      setTimeout(() => (this.formValid = true), 5000);
+      return;
+    }
+    this.formValid = true;
+    let formValue = form.value;
     sendMessage(
       {
-        name: formFeedback['nameUser'].value,
-        email: formFeedback['email'].value,
-        tel: formFeedback['phone'].value,
-        theme: formFeedback['theme'].value,
-        message: formFeedback['message'].value,
+        name: formValue['nameUser'],
+        email: formValue['email'],
+        tel: formValue['phone'],
+        theme: formValue['theme'],
+        message: formValue['message'],
         date: new Date().toLocaleString('ru'),
-        idContact: this.codeString(
-          formFeedback['email'].value + formFeedback['phone'].value
-        ),
+        idContact: this.codeString(formValue['email'] + formValue['phone']),
       },
       this.defineObject.bind(this),
       () => this.makeUnvisible()
     );
 
-    setTimeout(() => (this.unvisibleErrorSend = false), 3000);
+    setTimeout(() => (this.errorSend = true), 5000);
+    this.disabledButton = true;
+    setTimeout(() => (this.disabledButton = false), 7000);
   }
 
   codeString(str: string): string {
