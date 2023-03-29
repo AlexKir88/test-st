@@ -9,12 +9,12 @@ export class HttpService {
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json');
     this.http
-      .post(
-        'http://localhost:3000/',
-        sendData,
-        // .post('https://server-node-jhzh.onrender.com/', sendData,
-        { headers: headers }
-      )
+      // .post(
+      //   'http://localhost:3000/',
+      //   sendData,
+      .post('https://server-node-jhzh.onrender.com/', sendData, {
+        headers: headers,
+      })
       .subscribe({
         next: (data: any) => {
           callback(data);

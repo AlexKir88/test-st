@@ -2,6 +2,10 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { HttpService } from './http.service';
+import { HttpClient } from '@angular/common/http';
+import * as e from 'express';
+
+type ObjTheme = { id: number; name: string };
 
 @Component({
   selector: 'feedback',
@@ -9,7 +13,9 @@ import { HttpService } from './http.service';
   styleUrls: ['./feedback.component.scss'],
   providers: [HttpService],
 })
-export class Feedback {
+export class Feedback implements OnInit {
+  themes: ObjTheme[] | undefined;
+
   disabledButton: boolean = false;
   formValid: boolean = true;
   formSubmitted: boolean = false;
@@ -24,7 +30,14 @@ export class Feedback {
     this.formSubmitted = true;
   }
 
-  constructor(private httpService: HttpService) {}
+  constructor(private httpService: HttpService, private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get('http://localhost:3000/themes').subscribe({
+      // this.http.get('https://server-node-jhzh.onrender.com/themes').subscribe({
+      next: (data: any) => (this.themes = data),
+    });
+  }
 
   sabmitData(form: FormGroup) {
     if (form.status == 'INVALID') {
@@ -38,7 +51,9 @@ export class Feedback {
       name: formValue['nameUser'],
       email: formValue['email'],
       tel: formValue['phone'],
-      theme: formValue['theme'],
+      theme: this.themes?.find(function (element) {
+        return element.name === formValue['theme'];
+      })?.id,
       message: formValue['message'],
       date: new Date().toLocaleString('ru'),
       idContact: this.codeString(formValue['email'] + formValue['phone']),
