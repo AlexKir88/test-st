@@ -1,9 +1,6 @@
 <div class="name-field">Тема:</div>
 <div class="input-field">
     <select name="theme" [(ngModel)]="theme" >
-        <option>Техподдержка</option>
-        <option>Продажи</option>
-        <option>Другое</option>
-        <option>Еще один пункт</option>
+        <option *ngFor="let i of themes">{{i}}</option>
     </select><br />
 </div>

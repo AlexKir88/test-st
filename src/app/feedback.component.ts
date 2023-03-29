@@ -1,12 +1,13 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { sendMessage } from './request';
 import { FormGroup } from '@angular/forms';
+import { HttpService } from './http.service';
 
 @Component({
   selector: 'feedback',
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.scss'],
+  providers: [HttpService],
 })
 export class Feedback {
   disabledButton: boolean = false;
@@ -23,6 +24,8 @@ export class Feedback {
     this.formSubmitted = true;
   }
 
+  constructor(private httpService: HttpService) {}
+
   sabmitData(form: FormGroup) {
     if (form.status == 'INVALID') {
       this.formValid = false;
@@ -31,18 +34,18 @@ export class Feedback {
     }
     this.formValid = true;
     let formValue = form.value;
-    sendMessage(
-      {
-        name: formValue['nameUser'],
-        email: formValue['email'],
-        tel: formValue['phone'],
-        theme: formValue['theme'],
-        message: formValue['message'],
-        date: new Date().toLocaleString('ru'),
-        idContact: this.codeString(formValue['email'] + formValue['phone']),
-      },
-      this.defineObject.bind(this),
-      () => this.makeUnvisible()
+    let dataForSend: object = {
+      name: formValue['nameUser'],
+      email: formValue['email'],
+      tel: formValue['phone'],
+      theme: formValue['theme'],
+      message: formValue['message'],
+      date: new Date().toLocaleString('ru'),
+      idContact: this.codeString(formValue['email'] + formValue['phone']),
+    };
+
+    this.httpService.postData(dataForSend, this.defineObject.bind(this), () =>
+      this.makeUnvisible()
     );
 
     setTimeout(() => (this.errorSend = true), 5000);
