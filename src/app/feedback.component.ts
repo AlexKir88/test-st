@@ -33,8 +33,8 @@ export class Feedback implements OnInit {
   constructor(private httpService: HttpService, private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get('http://localhost:3000/themes').subscribe({
-      // this.http.get('https://server-node-jhzh.onrender.com/themes').subscribe({
+    // this.http.get('http://localhost:3000/themes').subscribe({
+    this.http.get('https://server-node-jhzh.onrender.com/themes').subscribe({
       next: (data: any) => (this.themes = data),
     });
   }
@@ -51,12 +51,10 @@ export class Feedback implements OnInit {
       name: formValue['nameUser'],
       email: formValue['email'],
       tel: formValue['phone'],
-      theme: this.themes?.find(function (element) {
-        return element.name === formValue['theme'];
-      })?.id,
+      theme: formValue['theme'],
       message: formValue['message'],
       date: new Date().toLocaleString('ru'),
-      idContact: this.codeString(formValue['email'] + formValue['phone']),
+      // idContact: this.codeString(formValue['email'] + formValue['phone']),
     };
 
     this.httpService.postData(dataForSend, this.defineObject.bind(this), () =>
