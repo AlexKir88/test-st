@@ -20,7 +20,7 @@ export class AppComponent {
     theme: '',
     message: '',
   };
-  async setData(objMessage: any): Promise<void> {
+  setData(objMessage: ObjMessage): void {
     this.messageData = objMessage;
   }
 }
